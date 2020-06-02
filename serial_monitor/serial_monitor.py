@@ -16,6 +16,9 @@ class Port:
         if self.port is not None:
             self.port.close()
 
+    def send(self, command):
+        self.port.write(bytes(command, encoding='utf-8'))
+
 
 # Refresh comports and return list
 def comports_refresh():

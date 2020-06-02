@@ -14,10 +14,14 @@ class SerialDisposerApp(QtWidgets.QMainWindow, qt_design.Ui_MainWindow):
         self.setupUi(self)
         # Variables
         self.port = None
+        # Refresh ports on startup
+        self.refresh_ports()
         # Update ports list than refresh button is clicked
         self.pushButton_refresh.clicked.connect(lambda: self.refresh_ports())
         # Connect to the selected port
         self.pushButton_connect.clicked.connect(lambda: self.connect_port())
+        # Send command from line edit
+        self.pushButton_send.clicked.connect(lambda: self.send_command())
 
     # Refresh ports list in comboBox
     def refresh_ports(self):
@@ -32,3 +36,7 @@ class SerialDisposerApp(QtWidgets.QMainWindow, qt_design.Ui_MainWindow):
         if device is not None:
             self.port = serial_monitor.Port(device, baudrate)
             self.port.connect()
+
+    def send_command(self):
+        command = self.lineEdit_send.text()
+        self.port.send(command)
