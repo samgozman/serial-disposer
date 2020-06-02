@@ -74,6 +74,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.pushButton_connect)
         self.verticalLayout_3.addLayout(self.horizontalLayout)
         self.textEdit_terminal = QtWidgets.QTextEdit(self.verticalLayoutWidget)
+        self.textEdit_terminal.setReadOnly(True)
         self.textEdit_terminal.setObjectName("textEdit_terminal")
         self.verticalLayout_3.addWidget(self.textEdit_terminal)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()

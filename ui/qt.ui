@@ -175,7 +175,11 @@
       </layout>
      </item>
      <item>
-      <widget class="QTextEdit" name="textEdit_terminal"/>
+      <widget class="QTextEdit" name="textEdit_terminal">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
