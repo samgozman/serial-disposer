@@ -6,6 +6,7 @@ from ui import ui
 
 
 def main():
+    # Start GUI
     app = QtWidgets.QApplication(sys.argv)
     window = ui.SerialDisposerApp()
     window.show()

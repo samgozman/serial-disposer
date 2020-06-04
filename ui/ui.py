@@ -1,6 +1,8 @@
 from PyQt5 import QtWidgets
 from ui import qt_design
+from threading import Thread
 from serial_monitor import serial_monitor
+
 
 # Convert qt.ui in qt_design.py by using this command from the terminal app:
 # pyuic5 qt.ui -o qt_design.py
@@ -8,6 +10,7 @@ from serial_monitor import serial_monitor
 
 # Window builder class
 class SerialDisposerApp(QtWidgets.QMainWindow, qt_design.Ui_MainWindow):
+
     def __init__(self):
         # Init window
         super().__init__()
@@ -36,7 +39,21 @@ class SerialDisposerApp(QtWidgets.QMainWindow, qt_design.Ui_MainWindow):
         if device is not None:
             self.port = serial_monitor.Port(device, baudrate)
             self.port.connect()
+            # Start new thread for textEdit update
+            thr = Thread(target=self._loop_refresh, args=())
+            thr.start()
 
     def send_command(self):
         command = self.lineEdit_send.text()
         self.port.send(command)
+
+    def _loop_refresh(self):
+        while True:
+            try:
+                text = self.port.read()
+                # encode to utf-8 and remove \n
+                text_encoded = str(text,  'utf-8').rstrip()
+                if text_encoded is not "":
+                    self.textEdit_terminal.append(text_encoded)
+            except:
+                break
